@@ -1,0 +1,10 @@
+<div class="admin-search">
+  <input type="text" placeholder="Enter Search Term" #searchValue/>
+  <button class="btn btn-primary" (click)="onSearch(searchValue.value)">Submit</button>
+</div>
+<div *ngIf="showComp" class="search-result">
+  <p>We found {{totalItemsFound}} new books.</p>
+  <p>Would you like to add?</p>
+  <button class="btn btn-primary" (click)="addNewBooks()">Yes</button>
+  <button class="btn btn-primary" (click)="noNewBooks()">No</button>
+</div>
