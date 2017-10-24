@@ -17,6 +17,7 @@ export class AdminInterfaceComponent implements OnInit, OnDestroy {
   private searchValue: ElementRef;
   getSearchDataSubscription: Subscription;
   items = [];
+  bookPerId = [];
   showComp = false;
   totalItemsFound = 0;
 
@@ -40,10 +41,16 @@ export class AdminInterfaceComponent implements OnInit, OnDestroy {
 
   addNewBooks() {
     if (this.items.length) {
-      this.items.forEach(item => {
-        this.books$.push(item)
-        .then(() => console.log('Books Added Successfully'), err => console.log(err));
+      this.books$.subscribe(books => {
+        books.forEach(book => {
+          this.bookPerId.push(book.id);
+        });
+        console.log(this.bookPerId);
       });
+      // this.items.forEach(item => {
+      //   this.books$.push(item)
+      //   .then(() => console.log('Books Added Successfully'), err => console.log(err));
+      // });
     }
 
   }
