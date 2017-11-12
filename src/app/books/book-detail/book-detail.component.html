@@ -1,0 +1,35 @@
+<div class="book-detail-desc">
+  <h2>{{ book?.$title }}</h2>
+  <section class="col-sm-4 book-large-thumb">
+    <img [src]="book?.$imageLinks['thumbnail']"/>
+  </section>
+  <section class="col-sm-8 book-info">
+    <div class="col-sm-6">
+      <p><b>Authors:</b></p>
+      <ol>
+        <li *ngFor="let author of book?.$authors">{{author}}</li>
+      </ol>
+      <p><b>Categories:</b></p>
+      <ol>
+        <li *ngFor="let category of book?.$categories">{{category}}</li>
+      </ol>
+      <p><b>Web Reader Link:</b></p>
+      <p><a [href]="book?.$webReaderLink">{{book?.$webReaderLink}}</a></p>
+    </div>
+    <div class="col-sm-6">
+      <p><b>Publisher:</b></p>
+      <p>{{book?.$publisher}}</p>
+      <p><b>Published Date:</b></p>
+      <p>{{book?.$publishedDate}}</p>
+      <p><b>Average Rating:</b></p>
+      <p>{{book?.$averageRating}}</p>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12">
+      <p><b>Description: </b></p>
+      <p>{{book?.$description}}</p>
+    </div>
+  </section>
+  <div class="clearfix"></div>
+</div>
+

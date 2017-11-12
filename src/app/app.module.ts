@@ -10,11 +10,24 @@ import { firebaseConfig } from '../environments/firebase.config';
 
 import { AppComponent } from './app.component';
 import { AdminModuleModule } from './admin-module/admin-module.module';
-import { HttpServiceService } from './http-service.service';
+import { HttpServiceService } from './services/http-service.service';
+import { HeaderComponent } from './header/header.component';
+import { DropdownDirective } from './directives/dropdown.directive';
+import { AppRoutingModule } from './app-routing.module';
+import { DbFirebaseService } from './services/db-firebase.service';
+import { BookDetailComponent } from './books/book-detail/book-detail.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { AuthFirebaseService } from './services/auth-firebase.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    DropdownDirective,
+    BookDetailComponent,
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -23,9 +36,10 @@ import { HttpServiceService } from './http-service.service';
     AdminModuleModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AppRoutingModule
   ],
-  providers: [HttpServiceService],
+  providers: [HttpServiceService, DbFirebaseService, AuthFirebaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

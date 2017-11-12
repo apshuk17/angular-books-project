@@ -1,0 +1,14 @@
+<h2 class="text-center">Recently Added Books</h2>
+<ng-container *ngFor="let book of ( recentBooks$ | async ); let i = index;">
+  <div class="col-sm-4 recent-books-item">
+    <section class="image-section" (click)="onClick(book)">
+        <img [src]="book.$imageLinks.smallThumbnail">
+    </section>
+    <section class="short-desc-section">
+      <p><b>Title:</b> <span>{{book.$title}}</span></p>
+      <p><b>Author:</b> <span>{{book.$authors[0]}}</span></p>
+      <p><b>Category:</b> <span>{{book.$categories[0]}}</span></p>
+    </section>
+  </div>
+  <div class="clearfix" *ngIf="(i+1) % 3 === 0"></div>
+</ng-container>

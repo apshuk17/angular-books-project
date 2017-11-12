@@ -1,0 +1,26 @@
+<div class="col-sm-12">
+  <h2 class="text-center">Add New Books</h2>
+  <p class="search-category">Please enter a book category to find the relevant books.</p>
+  <p class="ex-term">(E.g.  Science, Technology, Art, .....)</p>
+  <div class="input-group admin-search">
+    <input class="form-control" type="text" placeholder="Enter Search Term" #searchValue/>
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="button" (click)="onSearch(searchValue.value)">Go</button>
+    </span>
+  </div>
+
+  <div *ngIf="showComp" class="search-result">
+    <h3 class="new-books-count text-center">{{totalItemsFound}} new books are recorded.</h3>
+    <div class="search-result-list">
+      <ng-container *ngFor="let uniqueBook of uniqueSearchBooks; let i = index;">
+        <app-search-result class="col-sm-4"  [book]="uniqueBook"></app-search-result>
+        <div class="clearfix" *ngIf="(i+1) % 3 === 0"></div>
+      </ng-container>
+    </div>
+    <div class="clearfix"></div>
+    <div class="add-selected-books-section text-center">
+      <p>Click this button to add the selected books to database.</p>
+      <button [disabled]="!selectedBooks.length" class="btn btn-primary" (click)="addBooksToDb()">Add Books</button>
+    </div>
+  </div>
+</div>

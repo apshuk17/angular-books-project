@@ -9,7 +9,7 @@ export class HttpServiceService {
   constructor(private http: Http) {}
 
   getAdminData(term: string) {
-    return this.http.get('https://www.googleapis.com/books/v1/volumes?q=' + term + '&startIndex=0&maxResults=20')
+    return this.http.get('https://www.googleapis.com/books/v1/volumes?q=' + term + '&startIndex=0&maxResults=30')
                         .map((res: Response) => res.json());
   }
 

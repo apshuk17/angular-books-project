@@ -1,0 +1,17 @@
+img {
+    max-width: 100%;
+}
+.saved-books-item {
+    margin-bottom: 60px;
+}
+.image-section {
+    display: inline-block;
+    max-width: 40%;
+    cursor: pointer;
+}
+.short-desc-section {
+    display: inline-block;
+    max-width: 60%;
+    vertical-align: top;
+    padding-left: 10px;
+}
