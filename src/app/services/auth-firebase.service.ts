@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { AngularFireAuth, FirebaseAuthStateObservable } from 'angularfire2/auth';
+import { HttpServiceService } from './http-service.service';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 
@@ -12,7 +13,9 @@ export class AuthFirebaseService implements OnInit {
 
   authState = null;
 
-  constructor(public afAuth: AngularFireAuth, private router: Router) {
+  constructor(public afAuth: AngularFireAuth,
+              private router: Router,
+              private httpService: HttpServiceService) {
    this.afAuth.authState.subscribe(auth => {
      this.authState = auth;
    });
@@ -53,6 +56,7 @@ export class AuthFirebaseService implements OnInit {
 
   logout() {
     this.afAuth.auth.signOut();
+    this.httpService.firebaseUser.next(undefined);
     this.router.navigate(['/']);
   }
 

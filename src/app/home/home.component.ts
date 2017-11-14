@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DbFirebaseService } from '../services/db-firebase.service';
+import { HttpServiceService } from '../services/http-service.service';
 import { Book } from '../books/book';
 
 import { Observable } from 'rxjs/Observable';
@@ -15,7 +16,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   paginationCount$: Observable<number[]>;
   @Input() pageIndex: number;
 
-  
+  constructor(private dbFirebase: DbFirebaseService,
+              private httpService: HttpServiceService) { }
 
   onPageClick(): Observable<Book[]> {
     return this.getBooks(this.pageIndex);
@@ -28,8 +30,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
   }
 
-  constructor(private dbFirebase: DbFirebaseService) { }
-
   ngOnInit() {
     this.booksCollection$ = this.onPageClick();
     //this.booksCollection$.subscribe(console.log);
@@ -40,6 +40,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
       return paginationColl;
     });
+
+    // show signout option
+    this.httpService.signOut.next(true);
   }
 
   ngOnDestroy() {

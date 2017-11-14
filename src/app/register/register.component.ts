@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthFirebaseService } from '../services/auth-firebase.service';
+import { HttpServiceService } from '../services/http-service.service';
 import { PasswordValidation } from '../password-validation';
 import { Router } from '@angular/router';
 
@@ -15,16 +16,17 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private authFirebaseService: AuthFirebaseService,
-              private router: Router) { }
+              private router: Router,
+              private httpService: HttpServiceService) { }
 
   signUp() {
     const formValue = this.signupForm.value;
     this.authFirebaseService.signUpWithEmail(formValue.email, formValue.passwords.password).subscribe(res => {
-      console.log(res);
       if (res.uid) {
-        alert('User is successfully added');
         this.signupForm.reset();
-        this.router.navigate(['/home']);
+        alert('User is successfully added');
+        this.httpService.firebaseUser.next(res);
+        this.router.navigate(['/home', res.uid]);
       } else {
         alert(res.message);
       }
@@ -34,6 +36,8 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // form declaration
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       passwords: this.fb.group({
@@ -43,6 +47,9 @@ export class RegisterComponent implements OnInit {
       { validator: PasswordValidation.MatchPassword}
       )
     });
+
+    // no signout option
+    this.httpService.signOut.next(false);
   }
 
 }

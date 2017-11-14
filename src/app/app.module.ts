@@ -20,6 +20,8 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AuthFirebaseService } from './services/auth-firebase.service';
 import { RegisterComponent } from './register/register.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { RegisterComponent } from './register/register.component';
     BookDetailComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,10 @@ import { RegisterComponent } from './register/register.component';
     AngularFireAuthModule,
     AppRoutingModule
   ],
-  providers: [HttpServiceService, DbFirebaseService, AuthFirebaseService],
+  providers: [HttpServiceService,
+              DbFirebaseService,
+              AuthFirebaseService,
+              AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
