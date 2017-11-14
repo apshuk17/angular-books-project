@@ -1,0 +1,19 @@
+#facebook-login, #signin-lock {
+    display: block;
+    margin: 0 auto;
+    max-width: 75%;
+}
+
+#facebook-login {
+    cursor: pointer;
+}
+
+.login-section {
+    max-width: 50%;
+    margin: 0 auto;
+    padding: 30px 0;
+    background-color: rgba(174, 174, 174, .5);
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+         box-shadow: 0 10px 6px -6px #777;
+}

@@ -1,3 +1,5 @@
+import { AngularFireAuthProvider } from "angularfire2/auth";
+
 
   // Initialize Firebase
   export const firebaseConfig = {

@@ -6,9 +6,11 @@ import { RecentBooksComponent } from './admin-module/recent-books/recent-books.c
 import { BookDetailComponent } from './books/book-detail/book-detail.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const APP_ROUTES: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'add-new-book', component: SearchInterfaceComponent },
   { path: 'book-detail/:id', component: BookDetailComponent },
   { path: '', component: LoginComponent },

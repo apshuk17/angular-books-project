@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthFirebaseService } from '../services/auth-firebase.service';
 
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
@@ -11,17 +12,23 @@ import * as firebase from 'firebase/app';
 })
 export class LoginComponent implements OnInit {
 
-  user = null;
+  loginForm: FormGroup;
 
-  constructor(private authFirebaseService: AuthFirebaseService,
-              private afd: AngularFireDatabase ) { }
+  constructor(private fb: FormBuilder, private authFirebaseService: AuthFirebaseService) { }
 
-  loginWithFacebook() {
-    this.authFirebaseService.loginWithFacebook();
+  login() {
+    const formValue = this.loginForm.value;
+    this.loginForm.reset();
+    this.authFirebaseService.loginWithEmail(formValue.email, formValue.password).subscribe(res => {
+      console.log(res.uid); },
+      err => console.log(err));
   }
 
   ngOnInit() {
-    this.authFirebaseService.getAuthState().subscribe(user => this.user = user);
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
   }
 
 }
