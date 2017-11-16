@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdminServiceService } from '../admin-service.service';
+import { AdminServiceService } from '../../services/admin-service.service';
 
 @Component({
   selector: 'app-search-result',
@@ -12,7 +12,7 @@ export class SearchResultComponent implements OnInit {
 
   selected = false;
 
-  constructor(private adminService: AdminServiceService) { }
+  constructor(private adminService: AdminServiceService) {}
 
   onChange(event: any) {
     this.selected = !this.selected;

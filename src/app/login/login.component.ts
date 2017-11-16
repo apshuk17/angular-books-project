@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     this.authFirebaseService.loginWithEmail(formValue.email, formValue.password).subscribe(res => {
       if (res.uid) {
         this.httpService.firebaseUser.next(res);
-        this.router.navigate(['/home', res.uid]);
+        this.router.navigate(['/home']);
       } else {
         alert('Incorrect email or password');
       }

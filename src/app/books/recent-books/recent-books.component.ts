@@ -23,7 +23,6 @@ export class RecentBooksComponent implements OnInit {
 
   ngOnInit() {
     this.recentBooks$ = this.dbFirebase.getRecentBooks();
-    //this.recentBooks$.subscribe(res => console.log(res));
     this.dbFirebase.getCategories().subscribe(console.log);
   }
 

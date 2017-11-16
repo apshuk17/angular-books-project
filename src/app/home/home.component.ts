@@ -12,31 +12,43 @@ import { Observable } from 'rxjs/Observable';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
+  selectedCategory = 'All';
   booksCollection$: Observable<Book[]>;
+  bookCategories$: Observable<string[]>;
   paginationCount$: Observable<number[]>;
-  @Input() pageIndex: number;
 
   constructor(private dbFirebase: DbFirebaseService,
               private httpService: HttpServiceService) { }
 
-  onPageClick(): Observable<Book[]> {
-    return this.getBooks(this.pageIndex);
-  }
   getBooks(pageIndex: number, booksToDisplay: number = 12): Observable<Book[]> {
     return this.booksCollection$ = this.dbFirebase.getBooks().map(books => {
+      const totalBooks = books.length;
       const beginIndex = (pageIndex - 1) * booksToDisplay;
-      const endIndex = beginIndex + booksToDisplay;
+      const endIndex = (beginIndex + booksToDisplay) < totalBooks ? (beginIndex + booksToDisplay) : totalBooks;
       return books.slice(beginIndex, endIndex);
-    })
+    });
+  }
+
+  getBookCategories(): Observable<string[]> {
+    return this.bookCategories$ = this.dbFirebase.getCategories();
+  }
+
+  getBooksByCategory(category: string): Observable<Book[]> {
+    this.selectedCategory = category;
+    if (category === 'All') {
+      return this.getBooks(1);
+    } else {
+      return this.booksCollection$ = this.dbFirebase.getBooksByCategory(category);
+    }
   }
 
   ngOnInit() {
-    this.booksCollection$ = this.onPageClick();
-    //this.booksCollection$.subscribe(console.log);
+    this.getBooks(1);
+    this.getBookCategories();
     this.paginationCount$ = this.dbFirebase.getPagination().map(count => {
       const paginationColl = [];
-      for(let i=0; i <= count - 1; i++) {
-        paginationColl.push(i+1);
+      for (let i = 0; i <= count - 1; i++) {
+        paginationColl.push(i + 1);
       }
       return paginationColl;
     });
@@ -46,7 +58,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    
+
   }
 
 }

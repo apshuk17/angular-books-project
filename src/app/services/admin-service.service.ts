@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AdminServiceService {
 
+  selectedBooks = [];
+
   constructor() { }
 
-  selectedBooks = [];
-  
   addSelectedBook(book) {
     this.selectedBooks.push(book);
   }

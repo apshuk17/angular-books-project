@@ -9,7 +9,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { firebaseConfig } from '../environments/firebase.config';
 
 import { AppComponent } from './app.component';
-import { AdminModuleModule } from './admin-module/admin-module.module';
+import { RecentBooksComponent } from './books/recent-books/recent-books.component';
+import { SearchInterfaceComponent } from './search/search-interface/search-interface.component';
+import { SearchResultComponent } from './search/search-result/search-result.component';
 import { HttpServiceService } from './services/http-service.service';
 import { HeaderComponent } from './header/header.component';
 import { DropdownDirective } from './directives/dropdown.directive';
@@ -22,6 +24,7 @@ import { AuthFirebaseService } from './services/auth-firebase.service';
 import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { AdminServiceService } from './services/admin-service.service';
 
 @NgModule({
   declarations: [
@@ -32,14 +35,16 @@ import { AuthGuardService } from './services/auth-guard.service';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    RecentBooksComponent,
+    SearchInterfaceComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    AdminModuleModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
@@ -48,7 +53,8 @@ import { AuthGuardService } from './services/auth-guard.service';
   providers: [HttpServiceService,
               DbFirebaseService,
               AuthFirebaseService,
-              AuthGuardService],
+              AuthGuardService,
+              AdminServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 import * as _ from 'lodash';
-import { AdminServiceService } from '../admin-service.service';
+import { AdminServiceService } from '../../services/admin-service.service';
 
 @Component({
   selector: 'app-search-interface',
@@ -63,7 +63,7 @@ export class SearchInterfaceComponent implements OnInit, OnDestroy {
       const confirmationMsg = this.selectedBooks.length === 1 ?
                               `${this.selectedBooks.length} book is added successfully.` :
                               `${this.selectedBooks.length} books are added successfully.`;
-      confirm(confirmationMsg);
+      alert(confirmationMsg);
       this.showComp = false;
     }
   }

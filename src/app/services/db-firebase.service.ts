@@ -17,7 +17,7 @@ export class DbFirebaseService {
 
   constructor(private afd: AngularFireDatabase) { }
 
-  getRecentBook(book): Book {
+  getBook(book): Book {
     return new Book( book.id,
              book.$key,
              book.volumeInfo.title,
@@ -35,7 +35,7 @@ export class DbFirebaseService {
   getRecentBooks(): Observable<Book[]> {
     return this.recentBooks$.map(res => {
       return _.reverse(res.map(book => {
-        return this.getRecentBook(book);
+        return this.getBook(book);
       }));
     });
   }
@@ -43,14 +43,14 @@ export class DbFirebaseService {
   getBooks(): Observable<Book[]> {
     return this.books$.map(books => {
       return books.map(book => {
-        return this.getRecentBook(book);
-      }); 
+        return this.getBook(book);
+      });
     });
   }
 
   getPagination(): Observable<number> {
     return this.getBooks().map(books => {
-      return Math.floor(books.length / 12);
+      return Math.ceil(books.length / 12);
     });
   }
 
@@ -59,11 +59,27 @@ export class DbFirebaseService {
       books.forEach(book => {
         const diffArray = _.difference(book.volumeInfo.categories, this.bookCategories);
         if (diffArray.length) {
-          this.bookCategories.push(...diffArray);
+          this.bookCategories.push( ...diffArray);
         }
       });
+      this.bookCategories.unshift('All');
       return this.bookCategories;
     });
   }
 
+  getBooksByCategory(category: string): Observable<Book[]> {
+    return this.getBooks().map(books => {
+      const selectedBooks: Book[] = [];
+      books.map(book => {
+        if (book.$categories) {
+          book.$categories.forEach(bookCategory => {
+            if (bookCategory === category) {
+              selectedBooks.push(book);
+            }
+          });
+        }
+      });
+      return selectedBooks;
+    });
+  }
 }

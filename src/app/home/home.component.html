@@ -1,5 +1,22 @@
 <div class="home-section">
   <div class="col-sm-9">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="navbar-collapse" id="search-categories-section">
+          <ul class="nav navbar-nav">
+            <li class="dropdown" appDropdown>
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Select Book Category<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li (click)="getBooksByCategory(category)" class="book-category-item" *ngFor="let category of ( bookCategories$ | async )">{{category}}</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-6 current-category">
+        <h4>Current Category: {{selectedCategory}}</h4>
+      </div>
+    </div>
     <ng-container *ngFor="let book of ( booksCollection$ | async ); let i = index;">
       <div class="col-sm-6 saved-books-item">
         <section class="image-section" (click)="onClick(book)">
@@ -7,17 +24,21 @@
         </section>
         <section class="short-desc-section">
           <p><b>Title:</b> <span>{{book.$title}}</span></p>
-          <p><b>Author:</b> <span>{{book.$authors[0]}}</span></p>
-          <p><b>Category:</b> <span>{{book.$categories[0]}}</span></p>
+          <p><b>Author:</b> <span *ngIf="book.$authors; else unknown">{{book.$authors[0]}}</span></p>
+          <ng-template #unknown>
+            <span>Anonymous</span>
+          </ng-template>
+          <p><b>Category:</b> <span *ngIf="book.$categories; else unknown">{{book.$categories[0]}}</span></p>
         </section>
       </div>
       <div class="clearfix" *ngIf="(i+1) % 2 === 0"></div>
     </ng-container>
-    <!-- <div class="pagination-section">
+    <div class="clearfix"></div>
+    <div class="pagination-section text-center">
       <ng-container *ngIf="paginationCount$ | async as pageCount">
-        <a [] *ngFor="let item of pageCount" (click)="onPageClick()">{{item}}</a>
+        <a class="pagination-item" *ngFor="let item of pageCount" (click)="getBooks(+item)">{{item}}</a>
       </ng-container>  
-    </div> -->
+    </div>
   </div>
   <div class="col-sm-3">
     <h4>Recently added books</h4>

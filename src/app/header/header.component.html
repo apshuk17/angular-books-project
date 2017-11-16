@@ -9,16 +9,20 @@
     <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" appDropdown>
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Signin</a></li>
-            <li><a href="#">Register</a></li>
+            <ng-container *ngIf="!signOut">
+              <li><a [routerLink] = "['/login']">Signin</a></li>
+              <li><a [routerLink] = "['/register']">Register</a></li>
+            </ng-container>
+            <ng-container *ngIf="fireBaseUser">
+              <li><a [routerLink] = "['/home']">Home</a></li>
+              <li><a [routerLink] = "['/add-new-books']">Add New Books</a></li>
+            </ng-container>
             <ng-container *ngIf="signOut">
               <li role="separator" class="divider"></li>
-              <li><a href="#">Signout</a></li>
-              <li role="separator" class="divider"></li>
+              <li class="user-signout-item"><a (click)="userSignOut()">Signout</a></li>
             </ng-container>
-            <li><a href="#">One more separated link</a></li>
           </ul>
         </li>
       </ul>

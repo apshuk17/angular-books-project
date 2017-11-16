@@ -27,7 +27,7 @@ export class BookDetailComponent implements OnInit {
 
     this.actRoute.params.subscribe((res: Params) => {
       this.afd.object(`recentBooks/${res.id}`).subscribe(book => {
-        this.book = this.dbFirebase.getRecentBook(book);
+        this.book = this.dbFirebase.getBook(book);
       });
     });
   }
