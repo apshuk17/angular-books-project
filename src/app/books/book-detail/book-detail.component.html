@@ -1,35 +1,37 @@
+<ng-container *ngIf="( book$ | async ) as bookD">
 <div class="book-detail-desc">
-  <h2>{{ book?.$title }}</h2>
+  <h2>{{ bookD.$title }}</h2>
   <section class="col-sm-4 book-large-thumb">
-    <img [src]="book?.$imageLinks['thumbnail']"/>
+    <img [src]="bookD.$imageLinks['smallThumbnail']"/>
   </section>
   <section class="col-sm-8 book-info">
     <div class="col-sm-6">
       <p><b>Authors:</b></p>
       <ol>
-        <li *ngFor="let author of book?.$authors">{{author}}</li>
+        <li *ngFor="let author of bookD.$authors">{{author}}</li>
       </ol>
       <p><b>Categories:</b></p>
       <ol>
-        <li *ngFor="let category of book?.$categories">{{category}}</li>
+        <li *ngFor="let category of bookD.$categories">{{category}}</li>
       </ol>
       <p><b>Web Reader Link:</b></p>
-      <p><a [href]="book?.$webReaderLink">{{book?.$webReaderLink}}</a></p>
+      <p><a [href]="bookD.$webReaderLink">{{bookD.$webReaderLink}}</a></p>
     </div>
     <div class="col-sm-6">
       <p><b>Publisher:</b></p>
-      <p>{{book?.$publisher}}</p>
+      <p>{{bookD.$publisher}}</p>
       <p><b>Published Date:</b></p>
-      <p>{{book?.$publishedDate}}</p>
+      <p>{{bookD.$publishedDate}}</p>
       <p><b>Average Rating:</b></p>
-      <p>{{book?.$averageRating}}</p>
+      <p>{{bookD.$averageRating}}</p>
     </div>
     <div class="clearfix"></div>
     <div class="col-sm-12">
       <p><b>Description: </b></p>
-      <p>{{book?.$description}}</p>
+      <p>{{bookD.$description}}</p>
     </div>
   </section>
   <div class="clearfix"></div>
 </div>
+</ng-container>
 

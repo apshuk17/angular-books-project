@@ -12,7 +12,6 @@ export class DbFirebaseService {
 
   bookCategories: string[] = [];
 
-  recentBooks$: FirebaseListObservable<any[]> = this.afd.list('recentBooks');
   books$: FirebaseListObservable<any[]> = this.afd.list('books');
 
   constructor(private afd: AngularFireDatabase) { }
@@ -33,10 +32,10 @@ export class DbFirebaseService {
   }
 
   getRecentBooks(): Observable<Book[]> {
-    return this.recentBooks$.map(res => {
-      return _.reverse(res.map(book => {
+    return this.books$.map(books => {
+      return _.takeRight(books, 12).map(book => {
         return this.getBook(book);
-      }));
+      });
     });
   }
 

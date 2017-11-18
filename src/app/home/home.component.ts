@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { DbFirebaseService } from '../services/db-firebase.service';
 import { HttpServiceService } from '../services/http-service.service';
 import { Book } from '../books/book';
 
 import { Observable } from 'rxjs/Observable';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-home',
@@ -18,14 +20,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   paginationCount$: Observable<number[]>;
 
   constructor(private dbFirebase: DbFirebaseService,
-              private httpService: HttpServiceService) { }
+              private httpService: HttpServiceService,
+              private router: Router) { }
 
   getBooks(pageIndex: number, booksToDisplay: number = 12): Observable<Book[]> {
     return this.booksCollection$ = this.dbFirebase.getBooks().map(books => {
-      const totalBooks = books.length;
+      const latestBooks = _.reverse(books);
+      const totalBooks = latestBooks.length;
       const beginIndex = (pageIndex - 1) * booksToDisplay;
       const endIndex = (beginIndex + booksToDisplay) < totalBooks ? (beginIndex + booksToDisplay) : totalBooks;
-      return books.slice(beginIndex, endIndex);
+      return latestBooks.slice(beginIndex, endIndex);
     });
   }
 
@@ -40,6 +44,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     } else {
       return this.booksCollection$ = this.dbFirebase.getBooksByCategory(category);
     }
+  }
+
+  onClick(book: Book) {
+    this.router.navigate(['/home/book-detail/', book.$key]);
   }
 
   ngOnInit() {

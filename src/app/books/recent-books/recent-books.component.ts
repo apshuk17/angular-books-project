@@ -18,12 +18,11 @@ export class RecentBooksComponent implements OnInit {
   constructor(private dbFirebase: DbFirebaseService, private router: Router) { }
 
   onClick(book: Book) {
-    this.router.navigate(['/book-detail', book.$key]);
+    this.router.navigate(['/home/book-detail', book.$key]);
   }
 
   ngOnInit() {
     this.recentBooks$ = this.dbFirebase.getRecentBooks();
-    this.dbFirebase.getCategories().subscribe(console.log);
   }
 
 }

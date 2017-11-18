@@ -13,12 +13,11 @@ import { AuthGuardService } from './services/auth-guard.service';
 const APP_ROUTES: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'home', canActivate: [AuthGuardService], component: HomeComponent },
-  { path: 'add-new-books', canActivate: [AuthGuardService], component: SearchInterfaceComponent },
-  // { path: 'home/:uid', canActivate: [AuthGuardService], component: HomeComponent, children: [
-  //   { path: 'add-new-book', component: SearchInterfaceComponent },
-  //   { path: 'book-detail/:id', component: BookDetailComponent }
-  // ] },
+  { path: 'home', canActivate: [AuthGuardService], children: [
+    { path: '', component: HomeComponent },
+    { path: 'add-new-books', component: SearchInterfaceComponent },
+    { path: 'book-detail/:id', component: BookDetailComponent }]
+  },
   { path: 'not-found', component: PageNotFoundComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/not-found', pathMatch: 'full'}

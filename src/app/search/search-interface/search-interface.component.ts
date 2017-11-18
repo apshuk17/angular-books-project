@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { HttpServiceService } from '../../services/http-service.service';
+import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
+import { Observable} from 'rxjs/Observable';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 import * as _ from 'lodash';
@@ -19,6 +21,7 @@ export class SearchInterfaceComponent implements OnInit, OnDestroy {
   books$: FirebaseListObservable<any[]>;
   recentBooks$: FirebaseListObservable<any[]>;
   getSearchDataSubscription: Subscription;
+  getBooksSubscription: Subscription;
   items = [];
   uniqueBooks = [];
   uniqueSearchBooks = [];
@@ -28,7 +31,8 @@ export class SearchInterfaceComponent implements OnInit, OnDestroy {
 
   constructor(private httpService: HttpServiceService,
               private afd: AngularFireDatabase,
-              private adminService: AdminServiceService) { }
+              private adminService: AdminServiceService,
+              private router: Router) { }
 
   onSearch(searchValue: string) {
     if (searchValue) {
@@ -39,7 +43,6 @@ export class SearchInterfaceComponent implements OnInit, OnDestroy {
             this.uniqueSearchBooks = this.getUniqueBooks(this.items, this.uniqueBooks);
           }
           this.showComp = true;
-          console.log(this.uniqueSearchBooks);
         }
       );
 
@@ -58,34 +61,31 @@ export class SearchInterfaceComponent implements OnInit, OnDestroy {
     if (this.selectedBooks.length) {
       for ( const book of this.selectedBooks ) {
         this.books$.push(book);
-        this.recentBooks$.push(book);
       }
       const confirmationMsg = this.selectedBooks.length === 1 ?
                               `${this.selectedBooks.length} book is added successfully.` :
                               `${this.selectedBooks.length} books are added successfully.`;
       alert(confirmationMsg);
-      this.showComp = false;
+      this.adminService.selectedBooks = [];
+      this.uniqueSearchBooks = [];
+      this.router.navigate(['/home']);
     }
   }
 
-  noNewBooks() {
-    this.getSearchDataSubscription.unsubscribe();
-    this.items = [];
-    this.uniqueSearchBooks = [];
-    this.totalItemsFound = 0;
-    this.showComp = false;
-  }
 
   ngOnInit() {
     this.books$ = this.afd.list('books');
     this.recentBooks$ = this.afd.list('recentBooks');
-    this.books$.subscribe(res => {
+    this.getBooksSubscription = this.books$.subscribe(res => {
       this.uniqueBooks = _.uniqBy(res, 'id');
     });
     this.selectedBooks = this.adminService.selectedBooks;
   }
 
   ngOnDestroy() {
-    this.getSearchDataSubscription.unsubscribe();
+    this.getBooksSubscription.unsubscribe();
+    if (this.getSearchDataSubscription) {
+      this.getSearchDataSubscription.unsubscribe();
+    }
   }
 }

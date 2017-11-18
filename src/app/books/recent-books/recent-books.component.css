@@ -1,17 +1,9 @@
-h2 {
-    margin-bottom: 60px;
-}
-.recent-books-item {
-    margin-bottom: 60px;
-}
-.image-section {
-    display: inline-block;
-    max-width: 40%;
+.list-group-element {
     cursor: pointer;
+    list-style-type: none;
+    margin-bottom: 10px;
+    color: cornflowerblue;
 }
-.short-desc-section {
-    display: inline-block;
-    max-width: 60%;
-    vertical-align: top;
-    padding-left: 10px;
+.list-group {
+    margin-top: 55px;
 }
