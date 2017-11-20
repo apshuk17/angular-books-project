@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { DbFirebaseService } from '../services/db-firebase.service';
 import { HttpServiceService } from '../services/http-service.service';
@@ -22,7 +22,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(private dbFirebase: DbFirebaseService,
               private httpService: HttpServiceService,
-              private router: Router) { }
+              private router: Router,
+              private renderer: Renderer2) { }
 
   getBooks(pageIndex: number, booksToDisplay: number = 12): Observable<Book[]> {
     return this.booksCollection$ = this.dbFirebase.getBooks().map(books => {

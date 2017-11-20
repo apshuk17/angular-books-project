@@ -1,6 +1,10 @@
 .pagination-section {
     margin-bottom: 40px;
 }
+.pagination-section .active-elem {
+    background-color: #23527c;
+    color: #fff;
+}
 .pagination-item {
     display: inline-block;
     font-size: 18px;

@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
         this.signupForm.reset();
         alert('User is successfully added');
         this.httpService.firebaseUser.next(res);
-        this.router.navigate(['/home', res.uid]);
+        this.router.navigate(['/home']);
       } else {
         alert(res.message);
       }

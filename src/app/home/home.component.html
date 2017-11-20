@@ -22,7 +22,7 @@
       <div class="clearfix" *ngIf="(i+1) % 2 === 0"></div>
     </ng-container>
     <div class="clearfix"></div>
-    <div class="pagination-section text-center">
+    <div *ngIf="selectedCategory === 'All'" class="pagination-section text-center">
       <ng-container *ngIf="paginationCount$ | async as pageCount">
         <a class="pagination-item" *ngFor="let item of pageCount" (click)="getBooks(+item)">{{item}}</a>
       </ng-container>  
