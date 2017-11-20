@@ -17,7 +17,6 @@ export class SearchResultComponent implements OnInit {
   onChange(event: any) {
     this.selected = !this.selected;
     event.target.checked ? this.adminService.addSelectedBook(this.book) : this.adminService.removeSelectedBook(this.book);
-    console.log(this.adminService.selectedBooks);
   }
 
   ngOnInit() {

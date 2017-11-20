@@ -10,6 +10,8 @@ export class DbFirebaseService {
 
   book: Book;
 
+  bookToBeRemoved;
+
   bookCategories: string[] = [];
 
   books$: FirebaseListObservable<any[]> = this.afd.list('books');
@@ -64,6 +66,15 @@ export class DbFirebaseService {
       this.bookCategories.unshift('All');
       return this.bookCategories;
     });
+  }
+  getDbBook(book: Book) {
+    this.afd.object(`books/${book.$key}`).subscribe( res => {
+      this.bookToBeRemoved = book;
+    })
+  }
+  removeBook(book: Book) {
+    this.getDbBook(book);
+    this.afd.list(`books`).remove(this.bookToBeRemoved);
   }
 
   getBooksByCategory(category: string): Observable<Book[]> {

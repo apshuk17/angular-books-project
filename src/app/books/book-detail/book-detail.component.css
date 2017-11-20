@@ -3,4 +3,8 @@ h2 {
 }
 img {
     width: 75%;
+    display: block;
+}
+.form-check {
+    margin-top: 30px;
 }

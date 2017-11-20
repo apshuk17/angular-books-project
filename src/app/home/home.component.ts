@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   booksCollection$: Observable<Book[]>;
   bookCategories$: Observable<string[]>;
   paginationCount$: Observable<number[]>;
+  selected = false;
 
   constructor(private dbFirebase: DbFirebaseService,
               private httpService: HttpServiceService,
@@ -44,10 +45,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     } else {
       return this.booksCollection$ = this.dbFirebase.getBooksByCategory(category);
     }
-  }
-
-  onClick(book: Book) {
-    this.router.navigate(['/home/book-detail/', book.$key]);
   }
 
   ngOnInit() {

@@ -25,6 +25,7 @@ import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AdminServiceService } from './services/admin-service.service';
+import { BookItemComponent } from './books/book-item/book-item.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AdminServiceService } from './services/admin-service.service';
     PageNotFoundComponent,
     RecentBooksComponent,
     SearchInterfaceComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    BookItemComponent
   ],
   imports: [
     BrowserModule,

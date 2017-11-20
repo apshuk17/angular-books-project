@@ -18,19 +18,7 @@
       </div>
     </div>
     <ng-container *ngFor="let book of ( booksCollection$ | async ); let i = index;">
-      <div class="col-sm-6 saved-books-item">
-        <section class="image-section" (click)="onClick(book)">
-            <img [src]="book.$imageLinks.smallThumbnail">
-        </section>
-        <section class="short-desc-section">
-          <p><b>Title:</b> <span>{{book.$title}}</span></p>
-          <p><b>Author:</b> <span *ngIf="book.$authors; else unknown">{{book.$authors[0]}}</span></p>
-          <ng-template #unknown>
-            <span>Anonymous</span>
-          </ng-template>
-          <p><b>Category:</b> <span *ngIf="book.$categories; else unknown">{{book.$categories[0]}}</span></p>
-        </section>
-      </div>
+      <app-book-item [book]="book"></app-book-item>
       <div class="clearfix" *ngIf="(i+1) % 2 === 0"></div>
     </ng-container>
     <div class="clearfix"></div>
