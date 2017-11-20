@@ -27,6 +27,7 @@ export class SearchInterfaceComponent implements OnInit, OnDestroy {
   uniqueSearchBooks = [];
   selectedBooks = [];
   showComp = false;
+  showSpinner = false;
   totalItemsFound? = 0;
 
   constructor(private httpService: HttpServiceService,
@@ -35,6 +36,7 @@ export class SearchInterfaceComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   onSearch(searchValue: string) {
+    this.showSpinner = true;
     if (searchValue) {
       this.getSearchDataSubscription = this.httpService.getAdminData(searchValue).subscribe(
         res => {
@@ -42,6 +44,7 @@ export class SearchInterfaceComponent implements OnInit, OnDestroy {
           if (this.items.length) {
             this.uniqueSearchBooks = this.getUniqueBooks(this.items, this.uniqueBooks);
           }
+          this.showSpinner = false;
           this.showComp = true;
         }
       );

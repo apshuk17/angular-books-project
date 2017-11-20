@@ -63,14 +63,16 @@ export class DbFirebaseService {
           this.bookCategories.push( ...diffArray);
         }
       });
-      this.bookCategories.unshift('All');
+      if(this.bookCategories[0] !== 'All') {
+        this.bookCategories.unshift('All');
+      }
       return this.bookCategories;
     });
   }
   getDbBook(book: Book) {
     this.afd.object(`books/${book.$key}`).subscribe( res => {
       this.bookToBeRemoved = book;
-    })
+    });
   }
   removeBook(book: Book) {
     this.getDbBook(book);

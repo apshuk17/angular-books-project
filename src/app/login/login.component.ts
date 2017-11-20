@@ -15,6 +15,7 @@ import * as firebase from 'firebase/app';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  showSpinner: boolean;
 
   constructor(private fb: FormBuilder,
               private authFirebaseService: AuthFirebaseService,
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
               private router: Router) { }
 
   login() {
+    this.showSpinner = true;
     const formValue = this.loginForm.value;
     this.loginForm.reset();
     this.authFirebaseService.loginWithEmail(formValue.email, formValue.password).subscribe(res => {
@@ -30,12 +32,14 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
       } else {
         alert('Incorrect email or password');
+        this.showSpinner = false;
       }
     },
       err => console.log(err));
   }
 
   ngOnInit() {
+    this.showSpinner = false;
     // form declaration
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],

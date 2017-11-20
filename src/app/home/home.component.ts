@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   bookCategories$: Observable<string[]>;
   paginationCount$: Observable<number[]>;
   selected = false;
+  showSpinner: boolean;
 
   constructor(private dbFirebase: DbFirebaseService,
               private httpService: HttpServiceService,
@@ -31,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       const totalBooks = latestBooks.length;
       const beginIndex = (pageIndex - 1) * booksToDisplay;
       const endIndex = (beginIndex + booksToDisplay) < totalBooks ? (beginIndex + booksToDisplay) : totalBooks;
+      this.showSpinner = false;
       return latestBooks.slice(beginIndex, endIndex);
     });
   }
@@ -49,6 +51,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.showSpinner = true;
     this.getBooks(1);
     this.getBookCategories();
     this.paginationCount$ = this.dbFirebase.getPagination().map(count => {

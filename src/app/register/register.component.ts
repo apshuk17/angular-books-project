@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   signupForm: FormGroup;
+  showSpinner: boolean;
 
   constructor(private fb: FormBuilder,
               private authFirebaseService: AuthFirebaseService,
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
               private httpService: HttpServiceService) { }
 
   signUp() {
+    this.showSpinner = true;
     const formValue = this.signupForm.value;
     this.authFirebaseService.signUpWithEmail(formValue.email, formValue.passwords.password).subscribe(res => {
       if (res.uid) {
@@ -29,6 +31,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/home']);
       } else {
         alert(res.message);
+        this.showSpinner = false;
       }
      },
       err => console.log(err)
@@ -36,6 +39,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showSpinner = false;
 
     // form declaration
     this.signupForm = this.fb.group({
