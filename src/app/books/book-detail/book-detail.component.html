@@ -15,7 +15,7 @@
         <li *ngFor="let category of bookD.$categories">{{category}}</li>
       </ol>
       <p><b>Web Reader Link:</b></p>
-      <p><a [href]="bookD.$webReaderLink">{{bookD.$webReaderLink}}</a></p>
+      <p><a target="_blank" [href]="bookD.$webReaderLink">{{bookD.$webReaderLink}}</a></p>
     </div>
     <div class="col-sm-6">
       <p><b>Publisher:</b></p>
